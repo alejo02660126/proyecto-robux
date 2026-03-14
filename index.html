@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Generator</title>
 
 <style>
@@ -36,6 +37,7 @@ padding:4px;
 box-shadow:0 5px 10px rgba(0,0,0,0.5);
 transition:0.2s;
 border:3px solid transparent;
+cursor:pointer;
 }
 
 img:hover{
@@ -48,12 +50,62 @@ border:3px solid cyan;
 box-shadow:0 0 10px cyan;
 }
 
+/* BOTON */
+
+.boton{
+margin:20px;
+padding:15px 40px;
+font-size:20px;
+background:blue;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+.boton:hover{
+transform:scale(1.1);
+}
+
+/* LOADER */
+
+.loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+color:white;
+display:none;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.bar{
+width:80%;
+height:20px;
+background:#333;
+border-radius:10px;
+overflow:hidden;
+margin-top:20px;
+}
+
+.fill{
+width:0%;
+height:100%;
+background:lime;
+}
+
 </style>
 </head>
 <body>
 
 <img src="titulo.png" class="titulo">
 
+<!-- SKIN -->
 <div class="line">
 <img src="SKIN1.png">
 <img src="SKIN2.png">
@@ -61,18 +113,21 @@ box-shadow:0 0 10px cyan;
 <img src="SKIN4.png">
 </div>
 
+<!-- ROBUX -->
 <div class="line">
 <img src="ROBUX1.PNG">
 <img src="ROBUX2.PNG">
 <img src="ROBUX3.PNG">
 </div>
 
+<!-- NOCHES -->
 <div class="line">
 <img src="NOCHES1.png">
 <img src="NOCHES2.png">
 <img src="NOCHES3.png">
 </div>
 
+<!-- CLASES -->
 <div class="line">
 <img src="CLASES1.PNG">
 <img src="CLASES2.PNG">
@@ -89,6 +144,7 @@ box-shadow:0 0 10px cyan;
 <img src="CLASES7.PNG">
 </div>
 
+<!-- ESCAPA -->
 <div class="line">
 <img src="ESCAPA1.PNG">
 <img src="ESCAPA2.PNG">
@@ -105,6 +161,7 @@ box-shadow:0 0 10px cyan;
 <img src="ESCAPA8.PNG">
 </div>
 
+<!-- ROBA -->
 <div class="line">
 <img src="ROBA1.png">
 <img src="ROBA2.png">
@@ -143,6 +200,7 @@ box-shadow:0 0 10px cyan;
 <img src="ROBA21.png">
 </div>
 
+<!-- ACCE -->
 <div class="line">
 <img src="ACCE1.png">
 <img src="ACCE2.png">
@@ -150,12 +208,67 @@ box-shadow:0 0 10px cyan;
 <img src="ACCE4.png">
 </div>
 
+<!-- BRO -->
 <div class="line">
 <img src="BRO1.PNG">
 <img src="BRO2.PNG">
 <img src="BRO3.PNG">
 <img src="BRO4.PNG">
 </div>
+
+<button class="boton" onclick="start()">GENERAR</button>
+
+
+<div class="loader" id="loader">
+
+<h2 id="texto">Conectando...</h2>
+
+<div class="bar">
+<div class="fill" id="fill"></div>
+</div>
+
+</div>
+
+
+<script>
+
+const imgs=document.querySelectorAll("img");
+
+imgs.forEach(img=>{
+img.addEventListener("click",()=>{
+imgs.forEach(i=>i.classList.remove("selected"));
+img.classList.add("selected");
+});
+});
+
+function start(){
+
+document.getElementById("loader").style.display="flex";
+
+let fill=document.getElementById("fill");
+let texto=document.getElementById("texto");
+
+let p=0;
+
+let inter=setInterval(()=>{
+
+p+=4;
+
+fill.style.width=p+"%";
+
+if(p<30) texto.innerText="Conectando...";
+else if(p<60) texto.innerText="Verificando...";
+else if(p<90) texto.innerText="Generando...";
+else{
+texto.innerText="Completado";
+clearInterval(inter);
+}
+
+},200);
+
+}
+
+</script>
 
 </body>
 </html>
