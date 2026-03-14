@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Generator</title>
+
+<style>
+
+body{
+background:yellow;
+font-family:Arial;
+text-align:center;
+margin:0;
+padding:0;
+}
+
+.titulo{
+width:90%;
+max-width:450px;
+margin-top:15px;
+}
+
+.grid{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.line{
+display:flex;
+justify-content:center;
+gap:12px;
+margin:6px;
+flex-wrap:wrap;
+}
+
+img{
+width:90px;
+border-radius:12px;
+background:white;
+padding:4px;
+box-shadow:0 5px 10px rgba(0,0,0,0.5);
+transition:0.2s;
+border:3px solid transparent;
+cursor:pointer;
+}
+
+img:hover{
+transform:scale(1.15);
+}
+
+.selected{
+transform:scale(1.2);
+border:3px solid cyan;
+box-shadow:0 0 10px cyan;
+}
+
+.boton{
+margin:20px;
+padding:15px 40px;
+font-size:20px;
+background:blue;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+.boton:hover{
+transform:scale(1.1);
+}
+
+/* PANTALLA */
+
+.loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+color:white;
+display:none;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.bar{
+width:80%;
+height:20px;
+background:#333;
+border-radius:10px;
+overflow:hidden;
+margin-top:20px;
+}
+
+.fill{
+width:0%;
+height:100%;
+background:lime;
+}
+
+.final{
+display:none;
+margin-top:20px;
+}
+
+.reclamar{
+padding:15px 30px;
+font-size:20px;
+background:red;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+</style>
+</head>
+<body>
+
+<img src="titulo.png" class="titulo">
+
+<div class="grid">
+
+<div class="line">
+<img src="skin1.png">
+<img src="skin2.png">
+<img src="skin3.png">
+<img src="skin4.png">
+</div>
+
+<div class="line">
+<img src="robux1.png">
+<img src="robux2.png">
+<img src="robux3.png">
+</div>
+
+<div class="line">
+<img src="noches1.png">
+<img src="noches2.png">
+<img src="noches3.png">
+</div>
+
+</div>
+
+<button class="boton" onclick="start()">GENERAR</button>
+
+
+<div class="loader" id="loader">
+
+<h2 id="texto">Conectando...</h2>
+
+<div class="bar">
+<div class="fill" id="fill"></div>
+</div>
+
+<div class="final" id="final">
+
+<h2>LISTO</h2>
+
+<p>Reclamando recompensa...</p>
+
+<p id="contador">3</p>
+
+<button class="reclamar">RECLAMAR</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+const imgs=document.querySelectorAll("img");
+
+imgs.forEach(img=>{
+img.addEventListener("click",()=>{
+imgs.forEach(i=>i.classList.remove("selected"));
+img.classList.add("selected");
+});
+});
+
+function start(){
+
+document.getElementById("loader").style.display="flex";
+
+let fill=document.getElementById("fill");
+let texto=document.getElementById("texto");
+let final=document.getElementById("final");
+
+let p=0;
+
+let inter=setInterval(()=>{
+
+p+=4;
+
+fill.style.width=p+"%";
+
+if(p<30) texto.innerText="Conectando...";
+else if(p<60) texto.innerText="Verificando...";
+else if(p<90) texto.innerText="Generando...";
+else{
+
+clearInterval(inter);
+
+texto.innerText="Completado";
+
+final.style.display="block";
+
+count();
+
+}
+
+},200);
+
+}
+
+function count(){
+
+let c=3;
+
+let contador=document.getElementById("contador");
+
+let t=setInterval(()=>{
+
+c--;
+
+contador.innerText=c;
+
+if(c==0) clearInterval(t);
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
